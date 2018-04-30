@@ -11,8 +11,8 @@ namespace TMW_Client.ViewModels
 		/// <summary>
 		/// Get the azure service instance
 		/// </summary>
-		public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
-        public IDataStore<Joke> JokeDataStore => DependencyService.Get<IDataStore<Joke>>();
+        public IDataStore<Joke> JokeInitializer => DependencyService.Get<IDataStore<Joke>>();
+        public IAccount<User> LoginService => DependencyService.Get<IAccount<User>>();
 
         bool isBusy = false;
 		public bool IsBusy

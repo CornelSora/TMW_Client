@@ -9,12 +9,13 @@ using Xamarin.Forms.Xaml;
 
 namespace TMW_Client.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginDetail : ContentPage
-    {
-        public LoginDetail()
-        {
-            InitializeComponent();
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class LoginSuccessful : ContentPage
+	{
+		public LoginSuccessful ()
+		{
+			InitializeComponent();
+            
         }
-    }
+	}
 }

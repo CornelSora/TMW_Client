@@ -10,66 +10,77 @@ using Xamarin.Forms;
 
 namespace TMW_Client.ViewModels
 {
-	public class ItemsViewModel : BaseViewModel
-	{
-		public ObservableRangeCollection<Item> Items { get; set; }
+    public class ItemsViewModel : BaseViewModel
+    {
         public ObservableRangeCollection<Joke> Jokes { get; set; }
         public Command LoadItemsCommand { get; set; }
+        public int UserID { get; set; }
 
-		public ItemsViewModel()
-		{
-			Title = "Browse";
-			Items = new ObservableRangeCollection<Item>();
+        public ItemsViewModel()
+        {
+            UserID = -1;
+            Title = "Browse";
             Jokes = new ObservableRangeCollection<Joke>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-
-			MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
-			{
-				var _item = item as Item;
-				Items.Add(_item);
-				await DataStore.AddItemAsync(_item);
-			});
 
             MessagingCenter.Subscribe<NewItemPage, Joke>(this, "AddJoke", async (obj, item) =>
             {
                 var _item = item as Joke;
                 Jokes.Add(_item);
-                await JokeDataStore.AddItemAsync(_item);
+                await JokeInitializer.AddItemAsync(_item);
             });
         }
 
-		async Task ExecuteLoadItemsCommand()
-		{
-			if (IsBusy)
-				return;
+        public ItemsViewModel(int userID)
+        {
+            Title = "Browse";
+            Jokes = new ObservableRangeCollection<Joke>();
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            UserID = userID;
+            MessagingCenter.Subscribe<NewItemPage, Joke>(this, "AddJoke", async (obj, item) =>
+            {
+                var _item = item as Joke;
+                Jokes.Add(_item);
+                await JokeInitializer.AddItemAsync(_item);
+            });
+        }
 
-			IsBusy = true;
+        async Task ExecuteLoadItemsCommand()
+        {
+            if (IsBusy)
+                return;
 
-			try
-			{
-				Items.Clear();
-				var items = await DataStore.GetItemsAsync(true);
-				Items.ReplaceRange(items);
+            IsBusy = true;
 
+            try
+            {
                 Jokes.Clear();
-                var jokes = await JokeDataStore.GetItemsAsync(true);
-                Jokes.ReplaceRange(jokes);
+                if (UserID > 0)
+                {
+                    var jokes = await JokeInitializer.GetItemsAsync(true, UserID);
+                    Jokes.ReplaceRange(jokes);
+                }
+                else
+                {
+                    var jokes = await JokeInitializer.GetItemsAsync(true);
+                    Jokes.ReplaceRange(jokes);
+                }
 
             }
             catch (Exception ex)
-			{
-				Debug.WriteLine(ex);
-				MessagingCenter.Send(new MessagingCenterAlert
-				{
-					Title = "Error",
-					Message = "Unable to load items.",
-					Cancel = "OK"
-				}, "message");
-			}
-			finally
-			{
-				IsBusy = false;
-			}
-		}
-	}
+            {
+                Debug.WriteLine(ex);
+                MessagingCenter.Send(new MessagingCenterAlert
+                {
+                    Title = "Error",
+                    Message = "Unable to load items.",
+                    Cancel = "OK"
+                }, "message");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+    }
 }

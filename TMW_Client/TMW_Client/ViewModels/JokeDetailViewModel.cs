@@ -11,7 +11,7 @@ namespace TMW_Client.ViewModels
 
         public JokeDetailViewModel(Joke item = null)
         {
-            Title = item.Name;
+            Title = item?.Title;
             Item = item;
         }
 

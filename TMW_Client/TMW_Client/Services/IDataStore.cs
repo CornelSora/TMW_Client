@@ -9,7 +9,7 @@ namespace TMW_Client.Services
 		Task<bool> UpdateItemAsync(T item);
 		Task<bool> DeleteItemAsync(T item);
 		Task<T> GetItemAsync(string id);
-		Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
+		Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false, int UserID = -1);
 
 		Task InitializeAsync();
 		Task<bool> PullLatestAsync();

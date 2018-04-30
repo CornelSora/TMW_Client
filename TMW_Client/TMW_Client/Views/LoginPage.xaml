@@ -2,9 +2,29 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TMW_Client.Views.LoginPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="Register" Text="Sign Up" Clicked="Register_Clicked"/>
+        <ToolbarItem x:Name="Login" Text="Login" Clicked="Login_Clicked" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
+        <StackLayout VerticalOptions="StartAndExpand">
+            <StackLayout VerticalOptions="StartAndExpand" x:Name="LoginLayout">
+                <Label Text="Login" HorizontalTextAlignment="Center"></Label>
+                <Label Text="Username" />
+                <Entry x:Name="usernameEntry" Placeholder="username" Text="{Binding LoginViewModel.User.Username}" TextChanged="usernameEntry_TextChanged" />
+                <Label Text="Password" />
+                <Entry x:Name="passwordEntry" IsPassword="true" Text="{Binding LoginViewModel.User.Password}" />
+                <Button Text="Login" Clicked="OnLoginButtonClicked" />
+            </StackLayout>
+            <StackLayout VerticalOptions="StartAndExpand" x:Name="RegisterLayout" IsVisible="False">
+                <Label Text="Register" HorizontalTextAlignment="Center"></Label>
+                <Label Text="Username" />
+                <Entry x:Name="usernameRegister" Placeholder="username" Text="{Binding LoginViewModel.User.Username}" />
+                <Label Text="Password" />
+                <Entry x:Name="passwordRegister" IsPassword="true" Text="{Binding LoginViewModel.User.Password}" />
+                <Button Text="Login" Clicked="OnRegisterButtonClicked" />
+            </StackLayout>
+            <Label x:Name="errorLabel" Text="" TextColor="Red" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

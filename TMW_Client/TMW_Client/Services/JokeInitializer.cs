@@ -103,7 +103,7 @@ namespace TMW_Client.Services
             }
 
             Jokes.Clear();
-            Jokes = await _jokeService.GetAsyncJokes();
+            Jokes = await _jokeService.GetAsyncJokes(UserID);
             isBusy = false;
         }
     }

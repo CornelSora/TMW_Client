@@ -3,8 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TMW_Client.Views.ItemDetailPage"
              Title="{Binding Title}">
-	<StackLayout Spacing="20" Padding="15">
-		<Label Text="{Binding Item.Text}" FontSize="Medium"/>
-        <Label Text="{Binding Item.Description}" FontSize="Small"/>
+    <StackLayout Spacing="20" Padding="15">
+        <Button Text="Delete"
+                BackgroundColor="Red" 
+                TextColor="White" 
+                HorizontalOptions="End" 
+                Clicked="OnDelete" 
+                IsVisible="False"
+                x:Name="btnDelete"></Button>
+        <Label Text="{Binding Item.Name}" FontSize="Medium" HorizontalTextAlignment="Center"/>
+        <Label Text="{Binding Item.Text}" FontSize="Small"/>
+        <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal">
+                <Button x:Name="btnLike" Text="Like" Clicked="OnLikeButtonClicked"></Button>
+                <Label Text="{Binding Item.NoLikes}" x:Name="lblLike"></Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button x:Name="btnDislike"  Text="{Binding Item.NoUnlikes}" Clicked="OnDislikeButtonClicked"/>
+                <Label Text="Dislike" x:Name="lblDislike"></Label>
+            </StackLayout>
+        </StackLayout>
     </StackLayout>
 </ContentPage>
