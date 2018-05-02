@@ -86,6 +86,28 @@ namespace TMW_Client.Services
             }
             return false;
         }
+        /// <summary>
+        /// returns -2 if not internet connection; 1 if ok; 0 if not
+        /// </summary>
+        /// <param name="jokeID"></param>
+        /// <returns>-2 if not internet connection; 1 if ok; 0 if not</returns>
+        public async Task<int> DeleteAsync(string jokeID)
+        {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                return -2;
+            }
+            var userID = App.user.UserID;
+            var URL = Utils.PublicURL + "/api/joke/delete?UserID=" + userID + "&JokeID=" + jokeID;
+
+            var httpClient = new HttpClient();
+            var response = await httpClient.DeleteAsync(new Uri(URL));
+            if (response.IsSuccessStatusCode)
+            {
+                return 1;
+            }
+            return 0;
+        }
 
         public async Task<Joke> GetJoke(string jokeid, bool likeSuccess)
         {

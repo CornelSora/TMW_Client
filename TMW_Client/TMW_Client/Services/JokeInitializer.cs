@@ -17,32 +17,33 @@ namespace TMW_Client.Services
 	{
         public bool isBusy { get; set; }
         public DatastoreJoke DBJoke { get; set; }
-        public static List<Joke> Jokes;
+        public List<Joke> Jokes;
         public JokeService _jokeService;
         public int UserID { get; set; }
 
 
         public async Task<bool> AddItemAsync(Joke Joke)
 		{
-			await InitializeAsync();
+            await InitializeAsync();
 
             JokeService jokeService = new JokeService();
             await jokeService.AddAsyncJokeAsync(Joke);
 
 			Jokes.Add(Joke);
 
-			return await Task.FromResult(true);
+            return await Task.FromResult(true);
 		}
 
 		public async Task<bool> UpdateItemAsync(Joke Joke)
 		{
-			await InitializeAsync();
 
 			var _Joke = Jokes.Where((Joke arg) => arg.JokeID == Joke.JokeID).FirstOrDefault();
 			Jokes.Remove(_Joke);
 			Jokes.Add(Joke);
 
-			return await Task.FromResult(true);
+            await InitializeAsync();
+
+            return await Task.FromResult(true);
 		}
 
 		public async Task<bool> DeleteItemAsync(Joke Joke)

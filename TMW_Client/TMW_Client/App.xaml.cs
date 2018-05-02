@@ -72,7 +72,7 @@ namespace TMW_Client
                         {
                             Title = "About",
                             Icon = Device.OnPlatform<string>("tab_about.png",null,null)
-                        },
+                        }
                     }
                 };
             }

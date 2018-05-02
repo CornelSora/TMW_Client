@@ -22,7 +22,7 @@
                 <Entry x:Name="usernameRegister" Placeholder="username" Text="{Binding LoginViewModel.User.Username}" />
                 <Label Text="Password" />
                 <Entry x:Name="passwordRegister" IsPassword="true" Text="{Binding LoginViewModel.User.Password}" />
-                <Button Text="Login" Clicked="OnRegisterButtonClicked" />
+                <Button Text="Register" Clicked="OnRegisterButtonClicked" />
             </StackLayout>
             <Label x:Name="errorLabel" Text="" TextColor="Red" />
         </StackLayout>

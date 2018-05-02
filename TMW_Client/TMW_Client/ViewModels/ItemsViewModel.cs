@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -26,8 +27,27 @@ namespace TMW_Client.ViewModels
             MessagingCenter.Subscribe<NewItemPage, Joke>(this, "AddJoke", async (obj, item) =>
             {
                 var _item = item as Joke;
-                Jokes.Add(_item);
+                var newJokes = new List<Joke>();
+                newJokes.Add(item);
+                Jokes.AddRange(newJokes);
                 await JokeInitializer.AddItemAsync(_item);
+            });
+
+            MessagingCenter.Subscribe<ItemDetailPage, Joke>(this, "DeleteJoke", async (obj, item) =>
+            {
+                var _item = item as Joke;
+                //Jokes.Add(_item);
+                var jokeToDelete = new List<Joke>();
+                foreach (var el in Jokes)
+                {
+                    if (el.JokeID == _item.JokeID)
+                    {
+                        jokeToDelete.Add(el);
+                        break;
+                    }
+                }
+                Jokes.RemoveRange(jokeToDelete);
+                await JokeInitializer.DeleteItemAsync(_item);
             });
         }
 
@@ -37,12 +57,12 @@ namespace TMW_Client.ViewModels
             Jokes = new ObservableRangeCollection<Joke>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             UserID = userID;
-            MessagingCenter.Subscribe<NewItemPage, Joke>(this, "AddJoke", async (obj, item) =>
-            {
-                var _item = item as Joke;
-                Jokes.Add(_item);
-                await JokeInitializer.AddItemAsync(_item);
-            });
+            //MessagingCenter.Subscribe<NewItemPage, Joke>(this, "AddJoke", async (obj, item) =>
+            //{
+            //    var _item = item as Joke;
+            //    Jokes.Add(_item);
+            //    await JokeInitializer.AddItemAsync(_item);
+            //});
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -54,14 +74,15 @@ namespace TMW_Client.ViewModels
 
             try
             {
-                Jokes.Clear();
                 if (UserID > 0)
                 {
+                    Jokes.Clear();
                     var jokes = await JokeInitializer.GetItemsAsync(true, UserID);
                     Jokes.ReplaceRange(jokes);
                 }
                 else
                 {
+                    Jokes.Clear();
                     var jokes = await JokeInitializer.GetItemsAsync(true);
                     Jokes.ReplaceRange(jokes);
                 }

@@ -1,8 +1,6 @@
 ﻿using Plugin.Connectivity;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 using TMW_Client.Models;
 using TMW_Client.Services;
 using TMW_Client.ViewModels;
@@ -11,26 +9,17 @@ using Xamarin.Forms.Xaml;
 
 namespace TMW_Client.Views
 {
-    public partial class ItemsPage : ContentPage
-    {
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class MyItems : ContentPage
+	{
         ItemsViewModel firstViewModel;
-        ItemsViewModel secondViewModel;
 
         private int UserID = -1;
 
-        public ItemsPage()
+        public MyItems(int userID)
         {
             InitializeComponent();
-           
-            ToolbarItems.RemoveAt(1);
-            BindingContext = firstViewModel = new ItemsViewModel();
-
-        }
-        public ItemsPage(int userID)
-        {
-            InitializeComponent();
-            ToolbarItems.RemoveAt(0);
-            BindingContext = secondViewModel = new ItemsViewModel(userID);
+            BindingContext = firstViewModel = new ItemsViewModel(userID);
             this.UserID = userID;
         }
 
@@ -59,18 +48,11 @@ namespace TMW_Client.Views
 
                 // Manually deselect item
                 ItemsListView.SelectedItem = null;
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 Navigation.InsertPageBefore(new ItemsPage(), this);
                 await Navigation.PopAsync();
-            }
-        }
-
-        async void AddItem_Clicked(object sender, EventArgs e)
-        {
-            if (App.IsUserLoggedIn)
-            {
-                await Navigation.PushAsync(new NewItemPage());
             }
         }
 

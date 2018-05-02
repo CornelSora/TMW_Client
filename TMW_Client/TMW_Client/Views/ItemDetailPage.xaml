@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TMW_Client.Views.ItemDetailPage"
              Title="{Binding Title}">
-    <StackLayout Spacing="20" Padding="15">
+    <StackLayout Spacing="20" Padding="15" BackgroundColor="LightYellow">
         <Button Text="Delete"
                 BackgroundColor="Red" 
                 TextColor="White" 
@@ -11,16 +11,24 @@
                 Clicked="OnDelete" 
                 IsVisible="False"
                 x:Name="btnDelete"></Button>
-        <Label Text="{Binding Item.Name}" FontSize="Medium" HorizontalTextAlignment="Center"/>
-        <Label Text="{Binding Item.Text}" FontSize="Small"/>
-        <StackLayout Orientation="Horizontal">
-            <StackLayout Orientation="Horizontal">
-                <Button x:Name="btnLike" Text="Like" Clicked="OnLikeButtonClicked"></Button>
-                <Label Text="{Binding Item.NoLikes}" x:Name="lblLike"></Label>
+        <Label Text="{Binding Title}" FontSize="Medium" HorizontalTextAlignment="Center" TextColor="Black"/>
+        <Label Text="{Binding Item.Text}" FontSize="Small" TextColor="Black"/>
+        <StackLayout Orientation="Horizontal"  HorizontalOptions="Center" VerticalOptions="EndAndExpand">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                <Button x:Name="btnLike" 
+                        Text="Like" 
+                        TextColor="White"
+                        BackgroundColor="Blue"
+                        Clicked="OnLikeButtonClicked"></Button>
+                <Label Text="{Binding Item.NoLikes}" x:Name="lblLike" VerticalOptions="Center"></Label>
             </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Button x:Name="btnDislike"  Text="{Binding Item.NoUnlikes}" Clicked="OnDislikeButtonClicked"/>
-                <Label Text="Dislike" x:Name="lblDislike"></Label>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                <Button x:Name="btnDislike"  
+                        Text="Dislike" 
+                        TextColor="White"
+                        BackgroundColor="OrangeRed"
+                        Clicked="OnDislikeButtonClicked"/>
+                <Label Text="{Binding Item.NoUnlikes, Mode=TwoWay}" x:Name="lblDislike" VerticalOptions="Center"></Label>
             </StackLayout>
         </StackLayout>
     </StackLayout>

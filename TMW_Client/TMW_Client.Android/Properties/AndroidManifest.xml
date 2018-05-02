@@ -2,5 +2,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.companyname.TMW_Client" android:versionCode="1" android:versionName="1.0" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="25" />
 	<uses-permission android:name="android.permission.INTERNET" />
-	<application android:label="LetsLaugh" android:icon="@drawable/profile_generic"></application>
+	<application android:label="LetsLaugh"></application>
 </manifest>
